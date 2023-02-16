@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="home text-center">
+    <div class="py-5">
+        <h3>Top Tracks</h3>
+        <div class="top_tracks p-3">
+            {% for track in top_tracks %}
+                <div class="p-3 m-2 shadow">
+                    <img src="{{ track.image_url }}" class="card-img-top pb-3" alt="" width="150" height="150"> <br>
+                    <a href="{% url 'app:track_detail' track.id %}">
+                        <b>{{ track.primary_artist }} </b><br>
+                        {{ track.name|truncatechars:15 }}
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div id="albums" class="py-5">
+        <h3>Albums & EPs</h3>
+        <div class="flex p-3">
+            {% for album in albums %}
+                <div class="shadow m-3 p-3">
+                    <img src="{{ album.image_url }}" class="pb-3 img-art" alt=""> 
+                    <h6> <a href="{% url 'app:album_detail' album.id %}">{{ album.name }}</a> &CenterDot; {{ album.release_date }}</h6> 
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div id="pls" class="py-5">
+        <h3>Playlists</h3>
+        <div class="flex p-3">
+            {% for playlist in playlists %}
+                <div class="p-3 m-3 shadow">
+                    <img src="{{ playlist.image_url }}" class="img-art mb-3"  id="playlist-img" alt=""> <br>
+                    <h6><a href="{% url 'app:playlist_detail' playlist.id %}">{{ playlist.name }} </a></h6>
+                    <p class="desc"> {{ playlist.desc|truncatewords:10 }}</p>
+                    By {{ playlist.owner }} <br>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

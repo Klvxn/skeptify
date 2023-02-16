@@ -1,0 +1,95 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --my-green: #1DB954;
+    --my-black: #191414;
+   --my-green-2:  #1ED760;
+}
+
+nav, button {
+    background-color: var(--my-green-2);
+    color: #191414;
+    font-size: 1.1rem;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+input {
+    border-radius: 2rem;
+    padding-left: 1rem;
+    border: lightgray 1px solid;
+}
+
+.query_results {
+    text-align: center;
+}
+
+.track {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.btn, .lyrics {
+    font-size: 1.1rem;
+}
+
+.my-btn {
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.top_tracks {
+    display: flex;
+    flex-flow: wrap;
+    justify-content: space-evenly;
+}
+
+.flex {
+    display: flex;
+    flex-flow: wrap;
+    justify-content: space-between;
+}
+
+.album_tracks {
+    margin: 0 auto;
+    width: fit-content;
+    text-align: left;
+}
+
+#track-info {
+    margin: 0 auto;
+    width: auto;
+    text-align: center;
+}
+
+.card:hover {
+    background-color: whitesmoke;
+}
+
+.img-art, .desc {
+    height: 18.75rem;
+    width: 18.75rem;
+}
+
+.desc {
+    height: fit-content;
+}
+
+audio {
+    height: 2rem;
+    width: 15rem;
+}

@@ -1,24 +1,24 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="my-btn mt-4">
-    <div class="mb-3 btn-group" id="pills-tab" role="tablist">
+<div class="my-btn my-4">
+    <div class="btn-group" id="pills-tab" role="tablist">
         <button class="btn btn-outline-success  active" id="pills-info-tab" data-bs-toggle="pill" data-bs-target="#pills-info" type="button" role="tab" aria-controls="pills-info" aria-selected="true">Info</button>
-        <button class="btn btn-outline-secondary" id="pills-play-tab" data-bs-toggle="pill" data-bs-target="#pills-play" type="button" role="tab" aria-controls="pills-play" aria-selected="false">Play</button>
+        <button class="btn btn-outline-secondary" id="pills-play-tab" data-bs-toggle="pill" data-bs-target="#pills-play" type="button" role="tab" aria-controls="pills-play" aria-selected="false">Preview</button>
     </div>
 </div>
 <div class="tab-content" id="pills-tabContent">
     <div class="tab-pane fade show active" id="pills-info" role="tabpanel" aria-labelledby="pills-info-tab" tabindex="0">
-        <div class="p-4">
-            <div class="text-center py-4">
-                <img src="{{ album.image_url }}" alt="" class="img-art mb-3"> <br>
+        <div class="p-4 text-white">
+            <div class="text-center">
+                <img src="{{ album.image_url }}" alt="" class="img-art"> <br>
                 <h5>{{ album.name }}</h5>
                 {% for artist in album.artists %}
                 {{ artist }} &ThinSpace;
                 {% endfor %} <br>
                 {{ album.release_date }} <b> &centerdot; </b>  {{ album.total_tracks }} songs <br>
                 <p class="m-3">
-                    <a  href="{{ album.ext_url }}" class="btn btn-outline-success"> <img src="/static/sp.png" alt="" width="30" height="30"> Play on Spotify</a>
+                    <a  href="{{ album.ext_url }}" class="btn btn-outline-success"> <img src="/static/images/sp.png" alt="" width="30" height="30"> Play on Spotify</a>
                 </p>
             </div>
             <div class="album_tracks p-2">
@@ -28,13 +28,13 @@
             </div>
         </div>
     </div>
-    <div class="tab-pane fade text-center" id="pills-play" role="tabpanel" aria-labelledby="pills-play-tab" tabindex="0">
-        <div class="p-4">
-            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/album/{{ album.id }}?utm_source=generator" width="40%" height="740" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    <div class="tab-pane fade text-center mt-5" id="pills-play" role="tabpanel" aria-labelledby="pills-play-tab" tabindex="0">
+        <div>
+            <iframe src="https://open.spotify.com/embed/album/{{ album.id }}?utm_source=generator" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
         </div>
     </div>
 </div>
-<div class="text-center my-5">
+<div class="text-center text-white my-5">
     <hr>
     {{ album.label }} <br>     
     {{ album.copyright }} <br>

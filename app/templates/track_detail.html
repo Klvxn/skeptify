@@ -1,57 +1,60 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="my-btn mt-4">
-	<div class="mb-3 btn-group" id="pills-tab" role="tablist">
-		<button class="btn btn-outline-success  active" id="pills-info-tab" data-bs-toggle="pill" data-bs-target="#pills-info" type="button" role="tab" aria-controls="pills-info" aria-selected="true">Info</button>
-		<button class="btn btn-outline-secondary" id="pills-play-tab" data-bs-toggle="pill" data-bs-target="#pills-play" type="button" role="tab" aria-controls="pills-play" aria-selected="false">Play</button>
-	</div>
-</div>
-<div class="tab-content" id="pills-tabContent">
-	<div class="tab-pane fade show active" id="pills-info" role="tabpanel" aria-labelledby="pills-info-tab" tabindex="0">
-		<div class="p-4">
-			<div class="text-center py-4">
-				<img src="{{ track.image_url }}" alt="" class="img-art mb-3"> <br>
-				<div class="p-3">
-					<h5>{{ track.name }}</h5>
-					{{ track.primary_artist }} <br>
-					{{ track.release_date }} <br>
-					{{ track.album_name }} <br>
-					{{ track.type|capfirst }} <br>
-				</div>
-				<p class="m-3">
-					<a  href="{{ track.ext_url }}" class="btn btn-outline-success"> <img src="/static/sp.png" alt="" width="30" height="30"> Play on Spotify</a>
-				</p>
-			</div>
-		</div>
-	</div>
-	<div class="tab-pane fade text-center" id="pills-play" role="tabpanel" aria-labelledby="pills-play-tab" tabindex="0">
-		<div class="track py-4">
-			<div>
-				<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/{{ spotify_id }}?utm_source=generator" width="30%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-			</div>
-			<div class="lyrics m-3">
-				<div class="my-btn">
-					<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-						<li class="nav-item" role="presentation">
-							<button class="nav-link active" id="pills-lyrics-tab" data-bs-toggle="pill" data-bs-target="#pills-lyrics" type="button" role="tab" aria-controls="pills-lyrics" aria-selected="true">Show lyrics</button>
-						</li>
-						<li class="nav-item" role="presentation">
-							<button class="nav-link" id="pills-hide-tab" data-bs-toggle="pill" data-bs-target="#pills-hide" type="button" role="tab" aria-controls="pills-hide" aria-selected="false">Hide lyrics</button>
-						</li>
-					</ul>
-				</div>
-				<div class="tab-content" id="pills-tabContent">
-					<div class="tab-pane fade show active" id="pills-lyrics" role="tabpanel" aria-labelledby="pills-lyrics-tab" tabindex="0">
-						<div id='rg_embed_link_{{ genius_id }}' class='rg_embed_link' data-song-id='{{ genius_id }}'>
-							Read <a href='{{ lyrics_path }}'>Lyrics</a> on Genius
-						</div> <script crossorigin src='//genius.com/songs/{{ genius_id }}/embed.js'></script>
-					</div>
-					<div class="tab-pane fade text-center" id="pills-hide" role="tabpanel" aria-labelledby="pills-hide-tab" tabindex="0">
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+<div>
+    <div class="my-btn">
+        <div class="btn-group" id="pills-tab" role="tablist">
+            <button class="btn btn-outline-success  active" id="pills-info-tab" data-bs-toggle="pill" data-bs-target="#pills-info" type="button" role="tab" aria-controls="pills-info" aria-selected="true">Info</button>
+            <button class="btn btn-outline-secondary" id="pills-play-tab" data-bs-toggle="pill" data-bs-target="#pills-play" type="button" role="tab" aria-controls="pills-play" aria-selected="false">Preview</button>
+        </div>
+    </div>
+    <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="pills-info" role="tabpanel" aria-labelledby="pills-info-tab" tabindex="0">
+            <div class="p-4">
+                <div class="text-center py-4">
+                    <img src="{{ track.image_url }}" alt="" class="img-art"> <br>
+                    <div class="p-3 text-white">
+                        <h5>{{ track.name }}</h5>
+                        {{ track.primary_artist }} <br>
+                        {{ track.release_date }} <br>
+                        {{ track.album_name }} <br>
+                        {{ track.type|capfirst }} <br>
+                    </div>
+                    <p class="m-3">
+                        <a  href="{{ track.ext_url }}" class="btn btn-outline-success"> <img src="/static/images/sp.png" alt="" width="30" height="30"> Play on Spotify</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade text-center" id="pills-play" role="tabpanel" aria-labelledby="pills-play-tab" tabindex="0">
+            <div class="track py-4">
+                <div>
+                    <iframe src="https://open.spotify.com/embed/track/{{ spotify_track_id }}?utm_source=generator" class="sp_iframe" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                </div>
+                <div>
+                    <div class="my-btn">
+                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="pills-lyrics-tab" data-bs-toggle="pill" data-bs-target="#pills-lyrics" type="button" role="tab" aria-controls="pills-lyrics" aria-selected="true">Show lyrics</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="pills-hide-tab" data-bs-toggle="pill" data-bs-target="#pills-hide" type="button" role="tab" aria-controls="pills-hide" aria-selected="false">Hide lyrics</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="pills-lyrics" role="tabpanel" aria-labelledby="pills-lyrics-tab" tabindex="0">
+                            <div id="rg_embed_link_{{ genius_id }}" class="rg_embed_link" data-song-id="{{ genius_id }}">
+                                Read <a href="{{ lyrics_path }}">Lyrics</a> on Genius
+                            </div>
+                            <script crossorigin src="//genius.com/songs/{{ genius_id }}/embed.js" id="genius"></script>
+                        </div>
+                        <div class="tab-pane fade text-center" id="pills-hide" role="tabpanel" aria-labelledby="pills-hide-tab" tabindex="0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

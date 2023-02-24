@@ -190,7 +190,6 @@ def search_tracks(query):
 		song_details = {
 			"title": item["name"],
 			"artists": [artist["name"] for artist in item["artists"]],
-			"preview_url": item["preview_url"],
 			"image_url": item["album"]["images"][1]["url"],
 			"spotify_id": item["id"],
 		}

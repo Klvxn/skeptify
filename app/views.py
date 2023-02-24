@@ -14,11 +14,11 @@ from .utils import (
 
 # Create your views here.
 def home(request):
-	albums = get_albums()
-	playlists = get_playlists()
-	top_tracks = get_top_tracks()
-	context = {"albums": albums, "playlists": playlists, "top_tracks": top_tracks}
-	return render(request, "home.html", context)
+	# albums = get_albums()
+	# playlists = get_playlists()
+	# top_tracks = get_top_tracks()
+	# context = {"albums": albums, "playlists": playlists, "top_tracks": top_tracks}
+	return render(request, "home.html", )
 
 
 def search(request):
@@ -30,8 +30,8 @@ def search(request):
 	return render(request, "search_results.html", context)
 
 
-def get_track_detail(request, spotify_id):
-	track = get_track(spotify_id)
+def get_track_detail(request, track_id):
+	track = get_track(track_id)
 	track_name = track["name"]
 	track_artist = track["primary_artist"]
 	result = genius_search(f"{track_name}, {track_artist}")
@@ -39,7 +39,7 @@ def get_track_detail(request, spotify_id):
 	genius_id = result[0]["id"]
 	context = {
 		"track": track,
-		"spotify_id": spotify_id,
+		"spotify_track_id": track_id,
 		"lyrics_path": lyrics_path,
 		"genius_id": genius_id,
 	}
@@ -54,3 +54,7 @@ def album_detail(request, album_id):
 def playlist_detail(request, playlist_id):
 	playlist = get_playlist(playlist_id)
 	return render(request, "playlist_detail.html", {"playlist": playlist})
+
+
+def gallery(request):
+	return render(request, "gallery.html")

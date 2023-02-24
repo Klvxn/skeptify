@@ -1,18 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="query_results my-5">
+<div class="search_result my-5">
     {% if tracks %}
-        <h3 class="m-5">Showing search results for "{{ query }}"</h3>
-        <div class="flex justify-content-evenly">
+        <h4 class="m-5">Showing search results for "{{ query }}"</h4>
+        <div class="search">
             {% for track in tracks %}
-                <div class="p-3 mx-4 my-3 shadow">
-                    <img src="{{ track.image_url }}" alt="" class="img-fluid p-2"  height="200" width="200"> <br>
-                    <h6><a href="{% url 'app:track_detail' track.spotify_id %}"> {{ track.title }}</a></h6>
-                    {{ track.artists|first }} <br>
-                    {% if track.preview_url %}
-                        <audio controls src="{{ track.preview_url }}" class="my-2">Download</audio> <br>
-                    {% endif %}
+                <div class="p-3">
+                    <img src="{{ track.image_url }}" alt="" class="pb-2" height="180" width="180"> <br>
+                    <a href="{% url 'app:track_detail' track.spotify_id %}"><b> {{ track.title }}</b></a> <br>
+                    <span class="text-white-50">{{ track.artists|first }} </span><br>
                 </div>
             {% endfor %}
         </div>

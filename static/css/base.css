@@ -1,0 +1,126 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--my-black);
+}
+
+:root {
+    --my-black: #191414;
+   --my-green:  #1ED760;
+}
+
+nav, button {
+    background-color: var(--my-green);
+    color: var(--my-black);
+    font-size: 1rem;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a.btn:hover {
+    text-decoration: none;
+}
+
+.search_result {
+    text-align: center;
+}
+
+.track {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.my-btn {
+    width: max-content;
+    margin: 0 auto;
+}
+
+.flex {
+    display: flex;
+    overflow-x: scroll;
+    -ms-overflow-style: none;
+    padding: 1rem 0;
+}
+
+.flex::-webkit-scrollbar {
+    display: none;
+}
+
+.album_tracks {
+    margin: 0 auto;
+    width: fit-content;
+    text-align: left;
+}
+
+#track-info {
+    margin: 0 auto;
+    width: auto;
+    text-align: center;
+}
+
+.img-art {
+    height: 16rem;
+    width: 16rem;
+}
+
+blockquote {
+    font-size: 1.2rem;
+}
+
+iframe {
+    width: 80%;
+    height: 30rem;
+}
+
+.search {
+    margin: 0 auto;
+}
+
+@media (min-width: 1025px) {
+    .carousel-item img {
+        margin: 0 auto;
+        height: 36rem;
+    }
+
+    iframe {
+        width: 60%;
+    }
+
+    .search {
+        display: flex;
+        justify-content: space-evenly;
+    }
+}
+
+h4 {
+    color: white;
+}
+
+.sk-img {
+    margin: 0 auto;
+    text-align: center;
+    display: inline-block;
+}
+
+.sk-img img {
+    padding: 2rem;
+    max-width: 400px;
+    width: 380px;
+}
+
+.rg_embed_header, .rg_embed_body {
+    background-color: var(--my-black);
+    color: white;
+}
+
+.rg_embed a * {
+    background-color: lightgray;
+    color: white;
+}

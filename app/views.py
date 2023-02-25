@@ -14,11 +14,11 @@ from .utils import (
 
 # Create your views here.
 def home(request):
-	# albums = get_albums()
-	# playlists = get_playlists()
-	# top_tracks = get_top_tracks()
-	# context = {"albums": albums, "playlists": playlists, "top_tracks": top_tracks}
-	return render(request, "home.html", )
+	albums = get_albums()
+	playlists = get_playlists()
+	top_tracks = get_top_tracks()
+	context = {"albums": albums, "playlists": playlists, "top_tracks": top_tracks}
+	return render(request, "home.html", context)
 
 
 def search(request):

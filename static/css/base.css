@@ -32,11 +32,6 @@ a.btn:hover {
     text-align: center;
 }
 
-.track {
-    margin: 0 auto;
-    text-align: center;
-}
-
 .my-btn {
     width: max-content;
     margin: 0 auto;
@@ -79,6 +74,10 @@ iframe {
     height: 30rem;
 }
 
+.pill {
+    width: 5rem;
+}
+
 .search {
     margin: 0 auto;
 }
@@ -115,12 +114,16 @@ h4 {
     width: 380px;
 }
 
-.rg_embed_header, .rg_embed_body {
-    background-color: var(--my-black);
-    color: white;
+.rg_embed, .rg_embed * {
+    border: 1px var(--my-black) solid !important;
 }
 
-.rg_embed a * {
-    background-color: lightgray;
+.rg_embed_header, .rg_embed_body, .rg_embed_footer {
+    background-color: var(--my-black);
     color: white;
+    text-align: left;
+}
+
+.rg_embed_body a {
+    color: lightgray !important;
 }

@@ -4,8 +4,8 @@
 <div>
     <div class="my-btn">
         <div class="btn-group" id="pills-tab" role="tablist">
-            <button class="btn btn-outline-success  active" id="pills-info-tab" data-bs-toggle="pill" data-bs-target="#pills-info" type="button" role="tab" aria-controls="pills-info" aria-selected="true">Info</button>
-            <button class="btn btn-outline-secondary" id="pills-play-tab" data-bs-toggle="pill" data-bs-target="#pills-play" type="button" role="tab" aria-controls="pills-play" aria-selected="false">Preview</button>
+            <button class="btn btn-outline-success  active pill" id="pills-info-tab" data-bs-toggle="pill" data-bs-target="#pills-info" type="button" role="tab" aria-controls="pills-info" aria-selected="true">Info</button>
+            <button class="btn btn-outline-secondary pill" id="pills-preview-tab" data-bs-toggle="pill" data-bs-target="#pills-preview" type="button" role="tab" aria-controls="pills-preview" aria-selected="false">Preview</button>
         </div>
     </div>
     <div class="tab-content" id="pills-tabContent">
@@ -21,15 +21,15 @@
                         {{ track.type|capfirst }} <br>
                     </div>
                     <p class="m-3">
-                        <a  href="{{ track.ext_url }}" class="btn btn-outline-success"> <img src="/static/images/sp.png" alt="" width="30" height="30"> Play on Spotify</a>
+                        <a  href="{{ track.ext_url }}" class="btn btn-outline-success"> <img src="/static/images/sp.png" alt="" width="30" height="30"> preview on Spotify</a>
                     </p>
                 </div>
             </div>
         </div>
-        <div class="tab-pane fade text-center" id="pills-play" role="tabpanel" aria-labelledby="pills-play-tab" tabindex="0">
-            <div class="track py-4">
+        <div class="tab-pane fade text-center" id="pills-preview" role="tabpanel" aria-labelledby="pills-preview-tab" tabindex="0">
+            <div class="py-4">
                 <div>
-                    <iframe src="https://open.spotify.com/embed/track/{{ spotify_track_id }}?utm_source=generator" class="sp_iframe" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                    <iframe src="https://open.spotify.com/embed/track/{{ spotify_track_id }}?utm_source=generator" class="sp_iframe" frameBorder="0" allowfullscreen="" allow="autopreview; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
                 </div>
                 <div>
                     <div class="my-btn">

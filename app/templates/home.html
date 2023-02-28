@@ -69,14 +69,14 @@
         <span class="visually-hidden">Next</span>
     </button>
     <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExamplelight shadow" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#carouselExamplelight shadow" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carouselExamplelight shadow" data-bs-slide-to="2" aria-label="Slide 3"></button>
-        <button type="button" data-bs-target="#carouselExamplelight shadow" data-bs-slide-to="3" aria-label="Slide 4"></button>
-        <button type="button" data-bs-target="#carouselExamplelight shadow" data-bs-slide-to="4" aria-label="Slide 5"></button>
-        <button type="button" data-bs-target="#carouselExamplelight shadow" data-bs-slide-to="5" aria-label="Slide 6"></button>
-        <button type="button" data-bs-target="#carouselExamplelight shadow" data-bs-slide-to="6" aria-label="Slide 7"></button>
-        <button type="button" data-bs-target="#carouselExamplelight shadow" data-bs-slide-to="7" aria-label="Slide 8"></button>
+        <button type="button" data-bs-target="#carouselExamplelight" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExamplelight" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExamplelight" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        <button type="button" data-bs-target="#carouselExamplelight" data-bs-slide-to="3" aria-label="Slide 4"></button>
+        <button type="button" data-bs-target="#carouselExamplelight" data-bs-slide-to="4" aria-label="Slide 5"></button>
+        <button type="button" data-bs-target="#carouselExamplelight" data-bs-slide-to="5" aria-label="Slide 6"></button>
+        <button type="button" data-bs-target="#carouselExamplelight" data-bs-slide-to="6" aria-label="Slide 7"></button>
+        <button type="button" data-bs-target="#carouselExamplelight" data-bs-slide-to="7" aria-label="Slide 8"></button>
     </div>
   </div>
 {% endblock %}
@@ -87,10 +87,10 @@
         <h4>Top Tracks</h4>
         <div class="flex">
             {% for track in top_tracks %}
-                <div class="me-4 p-3 border border-dark shadow text-center">
+                <div class="me-4 p-3 border text-center">
                     <img src="{{ track.image_url }}" class="pb-2" alt="" width="180" height="180"> <br>
                     <a href="{% url 'app:track_detail' track.id %}" class="p-2">
-                        <b>{{ track.name|truncatechars:18 }} </b><br>
+                        <b>{{ track.name|truncatechars:21 }} </b><br>
                        <span  class="p-2 text-white-50">{{ track.primary_artist }}</span> 
                     </a>
                 </div>
@@ -102,9 +102,9 @@
         <h4>Albums & EPs</h4>
         <div class="flex">
             {% for album in albums %}
-                <div class="me-4 p-3 border border-dark shadow text-center">
+                <div class="me-4 p-3 border text-center">
                     <img src="{{ album.image_url }}" class="pb-3 img-art" alt=""> 
-                    <h5> <a href="{% url 'app:album_detail' album.id %}" class="p-2">{{ album.name }} &CenterDot; {{ album.release_date }}</a></h5> 
+                    <h6> <a href="{% url 'app:album_detail' album.id %}" class="p-2">{{ album.name }} &CenterDot; {{ album.release_date }}</a></h6> 
                 </div>
             {% endfor %}
         </div>
@@ -114,9 +114,9 @@
         <h4>Playlists</h4>
         <div class="flex">
             {% for playlist in playlists %}
-                <div class="me-4 p-3 border border-dark shadow text-center">
+                <div class="me-4 p-3 border text-center">
                     <img src="{{ playlist.image_url }}" class="img-art mb-3" alt=""> <br>
-                    <h5><a href="{% url 'app:playlist_detail' playlist.id %}" class="p-2">{{ playlist.name }} </a></h5>
+                    <h6><a href="{% url 'app:playlist_detail' playlist.id %}" class="p-2">{{ playlist.name }} </a></h6>
                     <p class="p-2 text-white-50">By {{ playlist.owner }} </p>
                 </div>
             {% endfor %}

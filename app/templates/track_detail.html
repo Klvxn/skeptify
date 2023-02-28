@@ -14,14 +14,14 @@
                 <div class="text-center py-4">
                     <img src="{{ track.image_url }}" alt="" class="img-art"> <br>
                     <div class="p-3 text-white">
-                        <h5>{{ track.name }}</h5>
+                        <h6>{{ track.name }}</h6>
                         {{ track.primary_artist }} <br>
                         {{ track.release_date }} <br>
                         {{ track.album_name }} <br>
                         {{ track.type|capfirst }} <br>
                     </div>
                     <p class="m-3">
-                        <a  href="{{ track.ext_url }}" class="btn btn-outline-success"> <img src="/static/images/sp.png" alt="" width="30" height="30"> preview on Spotify</a>
+                        <a  href="{{ track.ext_url }}" class="btn btn-outline-success"> <img src="/static/images/sp.png" alt="" width="30" height="30"> Play on Spotify</a>
                     </p>
                 </div>
             </div>

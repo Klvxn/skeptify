@@ -3,8 +3,8 @@
 {% block content %}
     <div class="my-btn my-3">
         <div class="mb-3 btn-group" id="pills-tab" role="tablist">
-            <button class="btn btn-outline-success  active" id="pills-info-tab" data-bs-toggle="pill" data-bs-target="#pills-info" type="button" role="tab" aria-controls="pills-info" aria-selected="true">Info</button>
-            <button class="btn btn-outline-secondary" id="pills-play-tab" data-bs-toggle="pill" data-bs-target="#pills-play" type="button" role="tab" aria-controls="pills-play" aria-selected="false">Preview</button>
+            <button class="btn btn-outline-success active pill" id="pills-info-tab" data-bs-toggle="pill" data-bs-target="#pills-info" type="button" role="tab" aria-controls="pills-info" aria-selected="true">Info</button>
+            <button class="btn btn-outline-secondary pill" id="pills-play-tab" data-bs-toggle="pill" data-bs-target="#pills-play" type="button" role="tab" aria-controls="pills-play" aria-selected="false">Preview</button>
         </div>
     </div>
     <div class="tab-content" id="pills-tabContent">
@@ -12,9 +12,9 @@
             <div class="p-4 text-white">
                 <div class="text-center">
                     <img src="{{ playlist.image_url }}" class="img-art" alt=""> <br>
-                    <h5>{{ playlist.name }}</h5>
-                    By {{ playlist.owner }} <b> &centerdot; </b>  {{ playlist.total_tracks }} songs <br>
+                    <h5 class="py-3">{{ playlist.name }}</h5>
                     {{ playlist.desc }} <br>
+                    By {{ playlist.owner }} <b> &centerdot; </b>  {{ playlist.total_tracks }} songs <br>
                     <p class="m-3">
                         <a  href="{{ playlist.ext_url }}" class="btn btn-outline-success"> <img src="/static/images/sp.png" alt="" width="30" height="30"> Play on Spotify</a>
                     </p>

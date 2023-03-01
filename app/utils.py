@@ -1,6 +1,8 @@
 import base64, requests
+import spotipy
 
 from django.conf import settings
+from spotipy.oauth2 import SpotifyOAuth
 
 
 access_token = settings.SPOTIFY_ACCESS_TOKEN
@@ -9,6 +11,15 @@ client_secret = settings.SPOTIFY_CLIENT_SECRET
 client = f"{client_id}:{client_secret}".encode("ascii")
 b64_client = base64.b64encode(client)
 str_client = b64_client.decode("ascii")
+
+auth_manager = SpotifyOAuth(
+    client_id=client_id,
+    client_secret=client_secret,
+    redirect_uri="http://localhost:8000/callback/",
+    scope="user-top-read",
+    show_dialog=True,
+)
+sp = spotipy.Spotify(auth_manager=auth_manager)
 
 base_url = "https://api.spotify.com/v1{}"
 sk_url = "https://api.spotify.com/v1/artists/2p1fiYHYiXz9qi0JJyxBzN{}"
@@ -39,10 +50,12 @@ def check_access_token():
 
 
 def get_albums():
-    album_url = sk_url.format("/albums?include_groups=album")
+    album_url = sk_url.format("/albums")
     access_token = check_access_token()
     r = requests.get(
-        album_url, headers={"Authorization": f"Bearer {access_token}"}
+        album_url,
+        headers={"Authorization": f"Bearer {access_token}"},
+        params={"include_groups": "album"},
     ).json()
     albums = []
     for a in r["items"]:
@@ -88,9 +101,13 @@ def get_album(album_id):
 
 
 def get_top_tracks():
-    url = sk_url.format("/top-tracks/?market=US")
+    url = sk_url.format("/top-tracks")
     access_token = check_access_token()
-    resp = requests.get(url, headers={"Authorization": f"Bearer {access_token}"}).json()
+    resp = requests.get(
+        url,
+        headers={"Authorization": f"Bearer {access_token}"},
+        params={"market": "US"},
+    ).json()
     tracks = []
     for t in resp["tracks"]:
         track = {
@@ -105,12 +122,9 @@ def get_top_tracks():
 
 
 def get_track(track_id):
-    sp_url = f"https://api.spotify.com/v1/tracks/{track_id}"
+    url = base_url.format(f"/tracks/{track_id}")
     access_token = check_access_token()
-    resp = requests.get(
-        sp_url, headers={"Authorization": f"Bearer {access_token}"}
-    ).json()
-    print(resp)
+    resp = requests.get(url, headers={"Authorization": f"Bearer {access_token}"}).json()
     track_details = {
         "name": resp["name"],
         "ext_url": resp["external_urls"]["spotify"],
@@ -183,10 +197,12 @@ def get_playlist(playlist_id):
 
 def search_tracks(query):
     songs = []
-    query_url = f"https://api.spotify.com/v1/search?q={query}+Skepta&type=track&limit=5"
+    query_url = f"https://api.spotify.com/v1/search"
     access_token = check_access_token()
     resp = requests.get(
-        query_url, headers={"Authorization": f"Bearer {access_token}"}
+        query_url,
+        headers={"Authorization": f"Bearer {access_token}"},
+        params={"q": f"{query}%20artist:Skepta", "type": "album, track", "limit": 5},
     ).json()
     for item in resp["tracks"]["items"]:
         song_details = {
@@ -197,3 +213,51 @@ def search_tracks(query):
         }
         songs.append(song_details)
     return songs[:4]
+
+
+def get_user():
+    user_info = sp.current_user()
+    user = {
+        "name": user_info["display_name"],
+        "image_url": user_info["images"][0]["url"],
+    }
+    return user
+
+
+def get_user_top_artists():
+    items = []
+    sp_range = ["short_term", "medium_term", "long_term"]
+    for range in sp_range:
+        top_artists = sp.current_user_top_artists(limit=10, time_range=range)
+        artists = []
+        for idx, i in enumerate(top_artists["items"], start=1):
+            artist_info = {
+                "idx": idx,
+                "name": i["name"],
+                "image_url": i["images"][0]["url"],
+                "ext_url": i["external_urls"]["spotify"],
+            }
+            artists.append(artist_info)
+        artists_by_range = {f"{range}_artists": artists}
+        items.append(artists_by_range)
+    return items
+
+
+def get_user_top_tracks():
+    items = []
+    sp_range = ["short_term", "medium_term", "long_term"]
+    for range in sp_range:
+        tracks = []
+        top_tracks = sp.current_user_top_tracks(limit=10, time_range=range)
+        for idx, i in enumerate(top_tracks["items"], start=1):
+            track_info = {
+                "idx": idx,
+                "name": i["name"],
+                "image_url": i["album"]["images"][1]["url"],
+                "ext_url": i["external_urls"]["spotify"],
+                "primary_artist": i["artists"][0]["name"],
+            }
+            tracks.append(track_info)
+        tracks_by_range = {f"{range}_tracks": tracks}
+        items.append(tracks_by_range)
+    return items

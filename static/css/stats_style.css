@@ -1,0 +1,53 @@
+:root {
+  --my-black: #191414;
+ --my-green:  #1ED760;
+}
+
+@media only screen and  (min-width: 641px) {
+  .stats {
+    display: flex;
+    flex-flow: row  wrap;
+    justify-content: center;
+  }
+
+  .item {
+    width: 28%;
+    padding-top: 1rem;
+    border-bottom: 0px !important;
+    margin: 0 .75rem;
+  }
+  
+  .my-container {
+    margin: 0 2rem;
+  }
+  
+}
+
+.item {
+  border-bottom: 1px lightgray solid;
+  margin-top: 1rem;
+}
+
+h3 {
+  margin: 3rem !important;
+  margin-bottom: 5rem !important;
+}
+
+#stats-artists {
+  margin: 7rem 0 !important;
+}
+
+.pills-tab {
+  width: max-content;
+  margin: 2rem auto;
+}
+
+
+#pills-tab button {
+  color: var(--my-black);
+}
+
+#pills-tab button.active {
+  background-color: var(--my-green) !important;
+  color: white; 
+}

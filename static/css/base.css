@@ -1,7 +1,7 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: var(--my-black);
+    background-color: var(--my-black) ;
 }
 
 :root {
@@ -131,3 +131,4 @@ h4 {
 .rg_embed_body a {
     color: lightgray !important;
 }
+

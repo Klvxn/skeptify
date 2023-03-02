@@ -13,15 +13,16 @@
                 <div class="text-center">
                     <img src="{{ playlist.image_url }}" class="img-art" alt=""> <br>
                     <h5 class="py-3">{{ playlist.name }}</h5>
-                    {{ playlist.desc }} <br>
-                    By {{ playlist.owner }} <b> &centerdot; </b>  {{ playlist.total_tracks }} songs <br>
+                    <p>{{ playlist.description }} </p>
+                    By {{ playlist.owner.display_name }} <b> &centerdot; </b>  {{ playlist.tracks.total }} songs <br>
+                    {{ playlist.followers.total }} followers <br>
                     <p class="m-3">
-                        <a  href="{{ playlist.ext_url }}" class="btn btn-outline-success"> <img src="/static/images/sp.png" alt="" width="30" height="30"> Play on Spotify</a>
+                        <a  href="{{ playlist.external_urls.spotify }}" class="btn btn-outline-success"> <img src="/static/images/sp.png" alt="" width="30" height="30"> Play on Spotify</a>
                     </p>
                 </div>
                 <div class="album_tracks p-2">
-                    {% for track in playlist.tracks %}
-                        &CenterDot;  {{ track.name }} <br>
+                    {% for item in playlist.playlist_tracks.items %}
+                        &CenterDot;  {{ item.track.name }} <br>
                     {% endfor %}
                 </div>
             </div>

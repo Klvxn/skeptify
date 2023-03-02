@@ -117,7 +117,7 @@
                 <div class="me-4 p-3 border text-center">
                     <img src="{{ playlist.image_url }}" class="img-art mb-3" alt=""> <br>
                     <h6><a href="{% url 'app:playlist_detail' playlist.id %}" class="p-2">{{ playlist.name }} </a></h6>
-                    <p class="p-2 text-white-50">By {{ playlist.owner }} </p>
+                    <p class="p-2 text-white-50">By {{ playlist.owner.display_name }} </p>
                 </div>
             {% endfor %}
         </div>

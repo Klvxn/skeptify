@@ -4,7 +4,6 @@ from .genius import genius_search
 from .utils import (
     get_album,
     get_albums,
-    get_playlist,
     get_playlists,
     get_track,
     get_top_tracks,
@@ -58,7 +57,7 @@ def album_detail(request, album_id):
 
 
 def playlist_detail(request, playlist_id):
-    playlist = get_playlist(playlist_id)
+    playlist = get_playlists(playlist_id)
     return render(request, "playlist_detail.html", {"playlist": playlist})
 
 

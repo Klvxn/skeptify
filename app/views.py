@@ -1,25 +1,23 @@
 from django.shortcuts import render
 
-from .genius import genius_search
-from .utils import (
-    get_album,
-    get_albums,
-    get_playlists,
-    get_track,
-    get_top_tracks,
-    get_user,
-    get_user_top_artists,
-    get_user_top_tracks,
+from .util import (
+    albums,
+    playlists,
+    single_album,
+    single_track,
+    top_tracks,
+    retrieve_user,
+    user_recently_played,
+    user_top_artists,
+    user_top_tracks,
     search_tracks,
+    genius_search,
 )
 
 
 # Create your views here.
 def home(request):
-    albums = get_albums()
-    playlists = get_playlists()
-    top_tracks = get_top_tracks()
-    context = {"albums": albums, "playlists": playlists, "top_tracks": top_tracks}
+    context = {"albums": albums(), "playlists": playlists(), "top_tracks": top_tracks()}
     return render(request, "home.html", context)
 
 
@@ -33,7 +31,7 @@ def search(request):
 
 
 def track_detail(request, track_id):
-    track = get_track(track_id)
+    track = single_track(track_id)
     track_name = track["name"]
     track_artist = track["primary_artist"]
     results = genius_search(f"{track_name}, {track_artist}")
@@ -52,17 +50,13 @@ def track_detail(request, track_id):
 
 
 def album_detail(request, album_id):
-    album = get_album(album_id)
+    album = single_album(album_id)
     return render(request, "album_detail.html", {"album": album})
 
 
 def playlist_detail(request, playlist_id):
-    playlist = get_playlists(playlist_id)
+    playlist = playlists(playlist_id)
     return render(request, "playlist_detail.html", {"playlist": playlist})
-
-
-def gallery(request):
-    return render(request, "gallery.html")
 
 
 def stats_home(request):
@@ -70,11 +64,11 @@ def stats_home(request):
 
 
 def user_stats(request):
-    user = get_user()
-    top_artists = get_user_top_artists()
-    top_tracks = get_user_top_tracks()
+    top_artists = user_top_artists()
+    top_tracks = user_top_tracks()
     context = {
-        "user": user,
+        "user": retrieve_user(),
+        "recently_played": user_recently_played(),
         "short_term_artists": top_artists[0],
         "medium_term_artists": top_artists[1],
         "long_term_artists": top_artists[2],

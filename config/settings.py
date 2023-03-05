@@ -24,7 +24,7 @@ load_dotenv()
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = os.environ["SECRET_KEY"]
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
+    "django.contrib.humanize",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
@@ -142,9 +143,12 @@ STATIC_ROOT = BASE_DIR / "staticfiles/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
-GENIUS_CLIENT_ID = os.environ.get("GENIUS_CLIENT_ID")
-GENIUS_CLIENT_SECRET = os.environ.get("GENIUS_CLIENT_SECRET")
-GENIUS_CLIENT_ACCESS_TOKEN = os.environ.get("GENIUS_CLIENT_ACCESS_TOKEN")
+SPOTIFY_ACCESS_TOKEN = os.environ["SPOTIFY_ACCESS_TOKEN"]
+SPOTIFY_CLIENT_ID = os.environ["SPOTIFY_CLIENT_ID"]
+SPOTIFY_CLIENT_SECRET = os.environ["SPOTIFY_CLIENT_SECRET"]
+REDIRECT_URI = os.environ["REDIRECT_URI"]
+
+GENIUS_ACCESS_TOKEN = os.environ["GENIUS_CLIENT_ACCESS_TOKEN"]
 
 
 # SESSION_COOKIE_SECURE = True

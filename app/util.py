@@ -1,58 +1,29 @@
-import base64, os
+import bs4
 import requests, spotipy
 
-from dotenv import load_dotenv
+from datetime import datetime
 from django.conf import settings
 from spotipy.oauth2 import SpotifyOAuth
 
+from .models import Artist
 
-load_dotenv()
 
-access_token = os.environ.get("SPOTIFY_ACCESS_TOKEN")
-client_id = os.environ.get("SPOTIFY_CLIENT_ID")
-client_secret = os.environ.get("SPOTIFY_CLIENT_SECRET")
-client = f"{client_id}:{client_secret}".encode("ascii")
-b64_client = base64.b64encode(client)
-str_client = b64_client.decode("ascii")
+client_id = settings.SPOTIFY_CLIENT_ID
+client_secret = settings.SPOTIFY_CLIENT_SECRET
+redirect_uri = settings.REDIRECT_URI
+genius_access_token = settings.GENIUS_ACCESS_TOKEN
 
 auth_manager = SpotifyOAuth(
     client_id=client_id,
     client_secret=client_secret,
-    redirect_uri="http://localhost:8000/callback/",
-    scope="user-top-read",
+    redirect_uri=redirect_uri,
+    scope="user-top-read user-read-recently-played",
     show_dialog=True,
 )
 sp = spotipy.Spotify(auth_manager=auth_manager)
 
-base_url = "https://api.spotify.com/v1{}"
-sk_url = "https://api.spotify.com/v1/artists/2p1fiYHYiXz9qi0JJyxBzN{}"
 
-
-def refresh_access_token() -> str | None:
-    r = requests.post(
-        "https://accounts.spotify.com/api/token",
-        headers={"Authorization": f"Basic {str_client}"},
-        data={"grant_type": "client_credentials"},
-    )
-    if r.status_code == 200:
-        settings.SPOTIFY_ACCESS_TOKEN = access_token = r.json()["access_token"]
-        return access_token
-    print(r.json())
-
-
-def check_access_token():
-    try:
-        resp = requests.get(
-            sk_url, headers={"Authorization": f"Bearer {access_token}"}
-        ).json()
-        print(resp["artists"])
-        return access_token
-    except KeyError:
-        new_token = refresh_access_token()
-        return new_token
-
-
-def get_albums():
+def albums():
     albums_response = sp.artist_albums("2p1fiYHYiXz9qi0JJyxBzN", album_type="album")
     albums = []
     for item in albums_response["items"]:
@@ -62,11 +33,11 @@ def get_albums():
             "release_date": item["release_date"][:4],
             "image_url": item["images"][1]["url"],
         }
-        album.append(album_info)
+        albums.append(album_info)
     return albums
 
 
-def get_album(album_id):
+def single_album(album_id):
     album_response = sp.album(album_id)
     album_info = {
         "id": album_response["id"],
@@ -90,7 +61,7 @@ def get_album(album_id):
     return album_info
 
 
-def get_top_tracks():
+def top_tracks():
     tracks_response = sp.artist_top_tracks("2p1fiYHYiXz9qi0JJyxBzN")
     tracks = []
     for item in tracks_response["tracks"]:
@@ -105,7 +76,7 @@ def get_top_tracks():
     return tracks
 
 
-def get_track(track_id):
+def single_track(track_id):
     track_response = sp.track(track_id)
     track_info = {
         "name": track_response["name"],
@@ -119,7 +90,7 @@ def get_track(track_id):
     return track_info
 
 
-def get_playlists(
+def playlists(
     playlist_id=[
         "37i9dQZF1E4Ap9589A8DyD",
         "37i9dQZF1DX5WbJFtYTzv7",
@@ -155,16 +126,9 @@ def get_playlists(
 
 
 def search_tracks(query):
-    # results = sp.search(f"{query}+Skepta", limit=4, type="track,album")
+    response = sp.search(f"{query}+Skepta", limit=4, type="album,track")
     songs = []
-    query_url = f"https://api.spotify.com/v1/search"
-    access_token = check_access_token()
-    resp = requests.get(
-        query_url,
-        headers={"Authorization": f"Bearer {access_token}"},
-        params={"q": f"{query}%20artist:Skepta", "type": "track", "limit": 4},
-    ).json()
-    for item in resp["tracks"]["items"]:
+    for item in response["items"]:
         song_info = {
             "title": item["name"],
             "artists": [artist["name"] for artist in item["artists"]],
@@ -175,7 +139,7 @@ def search_tracks(query):
     return songs
 
 
-def get_user():
+def retrieve_user():
     user_response = sp.current_user()
     user_info = {
         "name": user_response["display_name"],
@@ -184,26 +148,43 @@ def get_user():
     return user_info
 
 
-def get_user_top_artists():
+def user_top_artists():
     top_artists = []
     sp_range = ["short_term", "medium_term", "long_term"]
+    artists = Artist.objects.all()
     for range in sp_range:
         top_artists_response = sp.current_user_top_artists(limit=10, time_range=range)
-        artists = []
+        _artists = []
         for idx, item in enumerate(top_artists_response["items"], start=1):
+            artist_id = item["id"]
+            artist = artists.filter(artist_id=artist_id).first()
+            if artist is not None:
+                monthly_listeners = artist.monthly_listeners
+            else:
+                monthly_listeners = scrape_artist_monthly_listeners(artist_id)
             artist_info = {
                 "idx": idx,
                 "name": item["name"],
                 "image_url": item["images"][0]["url"],
                 "ext_url": item["external_urls"]["spotify"],
+                "monthly_listeners": monthly_listeners,
             }
-            artists.append(artist_info)
-        artists_by_range = {f"{range}_artists": artists}
+            _artists.append(artist_info)
+        artists_by_range = {f"{range}_artists": _artists}
         top_artists.append(artists_by_range)
     return top_artists
 
 
-def get_user_top_tracks():
+def scrape_artist_monthly_listeners(artist_id):
+    response = requests.get(f"https://open.spotify.com/artist/{artist_id}")
+    data = bs4.BeautifulSoup(response.content, "html.parser")
+    content = data.find_all("meta")[5].get("content")
+    value = content.split()[-3]
+    Artist.objects.create(artist_id=artist_id, monthly_listeners=value)
+    return value
+
+
+def user_top_tracks():
     top_tracks = []
     sp_range = ["short_term", "medium_term", "long_term"]
     for range in sp_range:
@@ -221,3 +202,32 @@ def get_user_top_tracks():
         tracks_by_range = {f"{range}_tracks": tracks}
         top_tracks.append(tracks_by_range)
     return top_tracks
+
+
+def user_recently_played():
+    response = sp.current_user_recently_played(limit=20)
+    tracks = []
+    for idx, item in enumerate(response["items"], start=1):
+        track = {
+            "idx": idx,
+            "name": item["track"]["name"],
+            "played_at": datetime.strptime(item["played_at"], "%Y-%m-%dT%H:%M:%S.%fZ"),
+            "image_url": item["track"]["album"]["images"][1]["url"],
+            "artist": item["track"]["artists"][0]["name"],
+        }
+        tracks.append(track)
+    return tracks
+
+
+def genius_search(*query):
+    resp = requests.get(
+        f"https://api.genius.com/search?q={query}",
+        headers={"authorization": f"Bearer {genius_access_token}"},
+    )
+    results = []
+    if resp.status_code == 200:
+        resp_obj = resp.json()["response"]["hits"]
+        for i in range(len(resp_obj)):
+            if "Skepta" in resp_obj[i]["result"]["artist_names"]:
+                results.append(resp_obj[i]["result"])
+    return results

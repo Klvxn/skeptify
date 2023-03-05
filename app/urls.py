@@ -2,7 +2,6 @@ from django.urls import path
 
 from .views import (
     album_detail,
-    gallery,
     stats_home,
     track_detail,
     home,
@@ -19,7 +18,6 @@ urlpatterns = [
     path("albums/<str:album_id>/", album_detail, name="album_detail"),
     path("playlists/<str:playlist_id>/", playlist_detail, name="playlist_detail"),
     path("find-track/", search, name="search"),
-    path("skepta/gallery/", gallery, name="gallery"),
     path("spotify-stats/home/", stats_home, name="stats_home"),
     path("me/spotify-stats/", user_stats, name="stats"),
 ]

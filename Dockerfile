@@ -11,8 +11,10 @@ RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-RUN python manage.py migrate && python manage.py collectstatic
+RUN python manage.py makemigrations \
+        python manage.py migrate \
+        python manage.py collectstatic
 
-EXPOSE 8000
+EXPOSE 8080
 
-CMD ["waitress-serve", "--listen=*:8000", "config.wsgi:application"]
+CMD ["waitress-serve", "--port=8080", "config.wsgi:application"]

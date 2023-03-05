@@ -84,40 +84,38 @@
 {% block content %}
 <div class="home">
     <div class="py-3">
-        <h4>Top Tracks</h4>
+        <h5>Top Tracks</h5>
         <div class="flex">
             {% for track in top_tracks %}
-                <div class="me-4 p-3 border text-center">
-                    <img src="{{ track.image_url }}" class="pb-2" alt="" width="180" height="180"> <br>
-                    <a href="{% url 'app:track_detail' track.id %}" class="p-2">
-                        <b>{{ track.name|truncatechars:21 }} </b><br>
-                    </a>
-                    <span  class="p-2 text-white-50">{{ track.primary_artist }}</span> 
+                <div class="me-5 text-start">
+                    <img src="{{ track.image_url }}" class="pb-2" alt="" width="150" height="150"> <br>
+                    <a href="{% url 'app:track_detail' track.id %}" class="fw-medium sm">{{ track.name }}</a><br>
+                    <span class="text-white-50 sm">{{ track.primary_artist }}</span> 
                 </div>
             {% endfor %}
         </div>
     </div>
 
     <div id="albums" class="py-3">
-        <h4>Albums & EPs</h4>
+        <h5>Albums & EPs</h5>
         <div class="flex">
             {% for album in albums %}
-                <div class="me-4 p-3 border text-center">
+                <div class="me-5 text-start">
                     <img src="{{ album.image_url }}" class="pb-3 img-art" alt=""> 
-                    <h6> <a href="{% url 'app:album_detail' album.id %}" class="p-2">{{ album.name }} &CenterDot; {{ album.release_date }}</a></h6> 
+                    <h6> <a href="{% url 'app:album_detail' album.id %}" class="py-2">{{ album.name }} &CenterDot; {{ album.release_date }}</a></h6> 
                 </div>
             {% endfor %}
         </div>
     </div>
 
     <div id="pls" class="py-3">
-        <h4>Playlists</h4>
+        <h5>Playlists</h5>
         <div class="flex">
             {% for playlist in playlists %}
-                <div class="me-4 p-3 border text-center">
+                <div class="me-5 text-start">
                     <img src="{{ playlist.image_url }}" class="img-art mb-3" alt=""> <br>
-                    <h6><a href="{% url 'app:playlist_detail' playlist.id %}" class="p-2">{{ playlist.name }} </a></h6>
-                    <p class="p-2 text-white-50">By {{ playlist.owner.display_name }} </p>
+                    <h6><a href="{% url 'app:playlist_detail' playlist.id %}" class="py-2">{{ playlist.name }} </a></h6>
+                    <p class="py-2 text-white-50">By {{ playlist.owner.display_name }} </p>
                 </div>
             {% endfor %}
         </div>

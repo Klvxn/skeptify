@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk&display=swap');
+
 body {
     margin: 0;
     padding: 0;
@@ -13,6 +15,7 @@ nav, button {
     background-color: var(--my-green);
     color: var(--my-black);
     font-size: 1rem;
+    font-family: 'Space Grotesk', sans-serif !important;
 }
 
 a {
@@ -42,10 +45,15 @@ a.btn:hover {
     overflow-x: scroll;
     -ms-overflow-style: none;
     padding: 1rem 0;
+    font-size: 1.2rem;
 }
 
 .flex::-webkit-scrollbar {
     display: none;
+}
+
+.sm {
+    font-size: .9rem;
 }
 
 .album_tracks {
@@ -98,12 +106,8 @@ iframe {
     }
 }
 
-h4 {
+h5 {
     color: white;
-}
-
-.border {
-    border: 1px #343a40 solid !important;
 }
 
 .sk-img {
@@ -131,4 +135,3 @@ h4 {
 .rg_embed_body a {
     color: lightgray !important;
 }
-
